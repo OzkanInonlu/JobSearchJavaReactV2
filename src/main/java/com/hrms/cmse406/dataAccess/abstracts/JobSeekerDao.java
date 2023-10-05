@@ -12,7 +12,9 @@ public interface JobSeekerDao extends JpaRepository<JobSeeker, Integer> {
 
     List<JobSeeker> getAllByJobPosition_Title(String jobPositionName);
 
-    JobSeeker getByJobSeekerId(int jobSeekerId);
+    JobSeeker getById(int jobSeekerId);
 
     JobSeeker findByIdentityNumber(String identityNumber);
+    
+    JobSeeker findByEmail(String email);
 }

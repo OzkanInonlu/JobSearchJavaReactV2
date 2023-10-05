@@ -19,7 +19,7 @@ import java.util.List;
 
 @Data
 @Entity
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cvs")
 public class Cv {
@@ -42,7 +42,7 @@ public class Cv {
 
     // @DateTimeFormat(pattern = "MM-dd-yyyy")
     @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @NotNull
     @NotBlank
@@ -52,7 +52,7 @@ public class Cv {
     @NotNull
     @NotBlank
     @OneToOne()
-    @JoinColumn(name = "job_seekers_job_seeker_id", referencedColumnName = "job_seeker_id")
+    @JoinColumn(name = "job_seeker_id", referencedColumnName = "user_id")
     private JobSeeker jobSeeker;
 
 //    @NotBlank
@@ -86,10 +86,10 @@ public class Cv {
     @NotBlank
 	@ManyToMany()
 	@JoinTable(
-	  name = "cvs_abilities", 
+	  name = "cvs_skills", 
 	  joinColumns = @JoinColumn(name = "cv_id", referencedColumnName = "cv_id"), 
-	  inverseJoinColumns = @JoinColumn(name = "ability_id", referencedColumnName = "ability_id"))
-    private List<Ability> abilities;
+	  inverseJoinColumns = @JoinColumn(name = "skill_id", referencedColumnName = "skill_id"))
+    private List<Skill> skills;
 
    @NotBlank
 //    @ManyToMany()
@@ -108,5 +108,26 @@ public class Cv {
     @OneToOne
     @JoinColumn(name = "job_seeker_image_id")
     private Image image;
+
+	public Cv(int cvId, @NotNull @NotBlank String githubLink, @NotNull @NotBlank String linkedinLink,
+			LocalDateTime createdAt, @NotNull @NotBlank String coverLetter, @NotNull @NotBlank JobSeeker jobSeeker,
+			@NotNull @NotBlank List<WorkExperience> workExperiences,
+			@NotBlank @NotNull @NotBlank List<Language> languages, @NotBlank @NotNull @NotBlank List<Skill> skills,
+			@NotBlank @NotNull @NotBlank List<School> schools, Image image) {
+		super();
+		this.cvId = cvId;
+		this.githubLink = githubLink;
+		this.linkedinLink = linkedinLink;
+		this.createdAt = LocalDateTime.now();
+		this.coverLetter = coverLetter;
+		this.jobSeeker = jobSeeker;
+		this.workExperiences = workExperiences;
+		this.languages = languages;
+		this.skills = skills;
+		this.schools = schools;
+		this.image = image;
+	}
+    
+    
 
 }

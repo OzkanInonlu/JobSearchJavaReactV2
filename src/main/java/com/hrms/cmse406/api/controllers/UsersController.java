@@ -3,6 +3,11 @@ package com.hrms.cmse406.api.controllers;
 import com.hrms.cmse406.business.abstracts.UserService;
 import com.hrms.cmse406.core.utilities.results.DataResult;
 import com.hrms.cmse406.core.utilities.results.ErrorDataResult;
+import com.hrms.cmse406.core.utilities.results.ErrorResult;
+import com.hrms.cmse406.core.utilities.results.Result;
+import com.hrms.cmse406.core.utilities.results.SuccessResult;
+import com.hrms.cmse406.entities.concretes.JobSeeker;
+import com.hrms.cmse406.entities.concretes.verifications.VerificationCodeJobSeeker;
 import com.hrms.cmse406.core.entities.concretes.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,11 +37,26 @@ public class UsersController {
 
         return ResponseEntity.ok(this.userService.add(user)) ;
     }
+    
+    
+    @PostMapping("verifyJobSeeker")
+	public Result verifyJobSeeker(@RequestParam int userId, @RequestParam String code) {
+		// TODO Auto-generated method stub
+    	return this.userService.verifyJobSeeker(userId, code);
+		
+	}
+    
 
-    @PostMapping(value="/delete")
+    @DeleteMapping(value="/delete")
     public ResponseEntity<?> delete(@Valid @RequestBody User user) {
 
         return ResponseEntity.ok(this.userService.delete(user)) ;
+    }
+    
+    @DeleteMapping(value="/deleteById")
+    public ResponseEntity<?> deleteById(@Valid @RequestParam int id) {
+
+        return ResponseEntity.ok(this.userService.deleteById(id)) ;
     }
 
     @GetMapping("/getAll")

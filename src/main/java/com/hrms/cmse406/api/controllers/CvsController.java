@@ -5,7 +5,7 @@ import com.hrms.cmse406.core.utilities.results.DataResult;
 import com.hrms.cmse406.core.utilities.results.Result;
 import com.hrms.cmse406.entities.concretes.Cv;
 import com.hrms.cmse406.entities.concretes.School;
-import com.hrms.cmse406.entities.dtos.CvWithSchoolDetails;
+import com.hrms.cmse406.entities.dtos.CvWithAllDetailsDto;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +42,9 @@ public class CvsController {
         return this.cvService.getAllBySchools_SchoolNameContains(schoolName);
     }
 
-    @GetMapping("/getAllByAbility_Description")
-    public DataResult<List<Cv>> getAllByAbilities_DescriptionContains(@RequestParam String description) {
-        return this.cvService.getAllByAbilities_DescriptionContains(description);
+    @GetMapping("/getAllBySkills_Description")
+    public DataResult<List<Cv>> getAllBySkills_DescriptionContains(@RequestParam String description) {
+        return this.cvService.getAllBySkills_DescriptionContains(description);
     }
     
    /*

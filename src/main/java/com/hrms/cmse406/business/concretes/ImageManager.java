@@ -121,10 +121,10 @@ public class ImageManager implements ImageService {
             if (file == null) {
                 candidateImage.setPhotoUrl("Image is not uploaded");
             }
-            JobSeeker jobSeeker = jobSeekerDao.getByJobSeekerId(candidateId);
+            JobSeeker jobSeeker = jobSeekerDao.getById(candidateId);
             Cv candidateCv = candidateCvDao.findByCvId(candidateCvId);
 
-            if (imageDao.findByJobSeeker_JobSeekerId(candidateId) != null) {
+            if (imageDao.findByJobSeeker_Id(candidateId) != null) {
                 return new ErrorResult("Photo has been already uploaded before");
             }
 

@@ -55,4 +55,12 @@ public class School {
 //    @JoinColumn(name = "cv_id")
     @ManyToMany(mappedBy = "schools")
     private List<Cv> cvs;
+    
+    
+    public String getGraduateDate() {
+    	if(graduateDate == null) {
+    		return "Still continue";
+    	}
+    	return graduateDate.toString();
+    }
 }

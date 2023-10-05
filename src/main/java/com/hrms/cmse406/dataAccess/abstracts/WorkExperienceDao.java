@@ -1,6 +1,5 @@
 package com.hrms.cmse406.dataAccess.abstracts;
 
-import com.hrms.cmse406.entities.concretes.Ability;
 import com.hrms.cmse406.entities.concretes.WorkExperience;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -9,7 +9,8 @@ import com.hrms.cmse406.core.utilities.results.SuccessResult;
 import com.hrms.cmse406.dataAccess.abstracts.CvDao;
 import com.hrms.cmse406.entities.concretes.Cv;
 import com.hrms.cmse406.entities.concretes.School;
-import com.hrms.cmse406.entities.dtos.CvWithSchoolDetails;
+//import com.hrms.cmse406.entities.dtos.CvWithAllDetails;
+import com.hrms.cmse406.entities.dtos.CvWithAllDetailsDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,9 @@ public class CvManager implements CvService {
     }
 
     @Override
-    public DataResult<List<Cv>> getAllByAbilities_DescriptionContains(String description) {
+    public DataResult<List<Cv>> getAllBySkills_DescriptionContains(String description) {
         return new SuccessDataResult<List<Cv>>
-        (this.cvDao.getAllByAbilities_DescriptionContains(description), "Data Listed");
+        (this.cvDao.getAllBySkills_DescriptionContains(description), "Data Listed");
     }
 
     @Override
@@ -60,12 +61,14 @@ public class CvManager implements CvService {
 		return new ErrorResult("Cv not found");
 	}
 
-    /*
 	@Override
-	public DataResult<List<CvWithSchoolDetails>> getCvWithSchoolDetails() {
+	public DataResult<Cv> findByJobSeeker_Id(int jobSeekerId) {
 		// TODO Auto-generated method stub
-		return new SuccessDataResult<List<CvWithSchoolDetails>>(this.cvDao.getCvWithSchoolDetails(), "Data Listed");
+		return new SuccessDataResult<Cv>(this.cvDao.findByJobSeeker_Id(jobSeekerId), "Data Listed");
 	}
-	*/
+	
+    
+
+
 
 }

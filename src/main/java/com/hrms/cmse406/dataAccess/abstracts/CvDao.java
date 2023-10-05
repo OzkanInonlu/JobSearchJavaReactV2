@@ -1,7 +1,7 @@
 package com.hrms.cmse406.dataAccess.abstracts;
 
 import com.hrms.cmse406.entities.concretes.Cv;
-import com.hrms.cmse406.entities.dtos.CvWithSchoolDetails;
+import com.hrms.cmse406.entities.dtos.CvWithAllDetailsDto;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,9 +16,11 @@ public interface CvDao extends JpaRepository<Cv, Integer> {
 
     List<Cv> getAllBySchools_SchoolNameContains(String schoolName);
 
-    List<Cv> getAllByAbilities_DescriptionContains(String description);
+    List<Cv> getAllBySkills_DescriptionContains(String description);
 
     Cv findByCvId(int id);
+    
+    Cv findByJobSeeker_Id(int id);
     
     
     

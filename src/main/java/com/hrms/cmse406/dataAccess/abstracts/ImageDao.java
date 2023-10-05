@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface ImageDao extends JpaRepository<Image, Integer> {
 
-    List<Image> getAllByJobSeeker_JobSeekerId(int jobSeekerId);
+    List<Image> getAllByJobSeeker_Id(int jobSeekerId);
 
     //void deleteByImageId(int imageId);
 
-    Image findByJobSeeker_JobSeekerId(int candidateId);
+    Image findByJobSeeker_Id(int candidateId);
 
 }

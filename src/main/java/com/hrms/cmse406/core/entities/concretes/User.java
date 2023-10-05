@@ -1,6 +1,8 @@
 package com.hrms.cmse406.core.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.*;
 import com.hrms.cmse406.entities.concretes.Employer;
 import com.hrms.cmse406.entities.concretes.JobSeeker;
@@ -15,13 +17,15 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Table(name = "users")
 public class User {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private int id;
 
     @Email
     @NotNull
@@ -37,15 +41,18 @@ public class User {
     @Column(name = "status")
     private boolean status;
 
+    /*
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private JobSeeker jobSeeker;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Employer employer;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private SystemStaff systemStaff;
+    
+    */
 }

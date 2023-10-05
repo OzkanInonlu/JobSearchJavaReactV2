@@ -31,7 +31,7 @@ public class JobApplicationManager implements JobApplicationService {
     @Override
     public DataResult<List<JobApplication>> getAllByJobSeeker_JobSeekerId(int jobSeekerId) {
         return new SuccessDataResult<List<JobApplication>>(
-                this.jobApplicationDao.getAllByJobSeeker_JobSeekerId(jobSeekerId), "Data Listed");
+                this.jobApplicationDao.getAllByJobSeeker_Id(jobSeekerId), "Data Listed");
     }
 
     @Override

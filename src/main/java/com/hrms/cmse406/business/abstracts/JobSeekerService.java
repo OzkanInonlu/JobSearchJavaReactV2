@@ -13,6 +13,7 @@ public interface JobSeekerService {
     DataResult<JobSeeker> getByIdentityNumber(String identityNumber);
 
     Result add(JobSeeker jobSeeker);
+    
 
     //DataResult<List<JobSeeker>> getAllBySortedAsc();
 

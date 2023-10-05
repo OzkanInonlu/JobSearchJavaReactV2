@@ -17,13 +17,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "jobAdvertisements" })
+@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
 @Table(name = "employers")
-public class Employer {
+public class Employer extends User{
 
+	/*
     @Id
     @GeneratedValue
     @Column(name = "employer_id")
     private int employerId;
+    */
 
     @NotNull
     @NotBlank
@@ -32,18 +35,20 @@ public class Employer {
 
     @NotNull
     @NotBlank
-    @Column(name = "web_site")
-    private String webSite;
+    @Column(name = "web_address")
+    private String webAddress;
 
     @NotNull
     @NotBlank
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    /*
     @JsonIgnoreProperties({ "password", "status" })
     @OneToOne()
     @JoinColumn(name = "users_user_id", referencedColumnName = "user_id")
     private User user;
+    */
 
     @JsonIgnore
     @OneToMany(mappedBy = "employer")

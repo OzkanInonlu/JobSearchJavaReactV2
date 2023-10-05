@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface JobApplicationDao extends JpaRepository<JobApplication, Integer> {
 
-    List<JobApplication> getAllByJobSeeker_JobSeekerId(int jobSeekerId);
+    List<JobApplication> getAllByJobSeeker_Id(int jobSeekerId);
 
 }

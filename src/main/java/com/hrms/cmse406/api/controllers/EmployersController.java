@@ -33,5 +33,16 @@ public class EmployersController {
     public Result deleteById(@RequestParam int id) {
     	return this.employerService.deleteById(id);
     }
+    
+    @DeleteMapping("/delete")
+    public Result delete(@RequestBody Employer employer) {
+    	return this.employerService.delete(employer);
+    }
+    
+    
+    @GetMapping("/findById")
+    public Result findById(@RequestParam int id) {
+    	return this.employerService.findByEmployerId(id);
+    }
 
 }

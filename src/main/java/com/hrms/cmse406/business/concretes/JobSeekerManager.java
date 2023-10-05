@@ -8,7 +8,12 @@ import com.hrms.cmse406.core.utilities.validation.MernisValidator;
 import com.hrms.cmse406.core.utilities.validation.ValidationService;
 import com.hrms.cmse406.core.verification.abstracts.EmailVerificationService;
 import com.hrms.cmse406.dataAccess.abstracts.JobSeekerDao;
+import com.hrms.cmse406.dataAccess.abstracts.VerificationCodeDao;
+import com.hrms.cmse406.dataAccess.abstracts.VerificationCodeJobSeekerDao;
 import com.hrms.cmse406.entities.concretes.JobSeeker;
+import com.hrms.cmse406.entities.concretes.verifications.VerificationCode;
+import com.hrms.cmse406.entities.concretes.verifications.VerificationCodeJobSeeker;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -22,15 +27,20 @@ public class JobSeekerManager implements JobSeekerService {
     private MernisService mernisService;
     private ValidationRuleService validationRuleService;
     private EmailVerificationService emailVerificationService;
+    private VerificationCodeDao verificationCodeDao;
+    private VerificationCodeJobSeekerDao verificationCodeJobSeekerDao;
 
     @Autowired
     public JobSeekerManager(JobSeekerDao jobSeekerDao, MernisService mernisService,
-            ValidationRuleService validationRuleService, EmailVerificationService emailVerificationService) {
+            ValidationRuleService validationRuleService, EmailVerificationService emailVerificationService, 
+            VerificationCodeDao verificationCodeDao, VerificationCodeJobSeekerDao verificationCodeJobSeekerDao) {
         super();
         this.jobSeekerDao = jobSeekerDao;
         this.mernisService = mernisService;
         this.validationRuleService = validationRuleService;
         this.emailVerificationService = emailVerificationService;
+        this.verificationCodeDao = verificationCodeDao;
+        this.verificationCodeJobSeekerDao = verificationCodeJobSeekerDao;
     }
 
     @Override
@@ -57,20 +67,36 @@ public class JobSeekerManager implements JobSeekerService {
          */
 
         // check email and id if they exist before
-        boolean emailAndIdValidationResult = checkId(jobSeeker);
-        if (emailAndIdValidationResult)
+        boolean idValidationResult = checkId(jobSeeker);
+        if (idValidationResult)
             return new ErrorResult("Identity number already exists.");
 
         // verify email
-        System.out.println(this.emailVerificationService.verifyEmail(jobSeeker.getUser().getEmail()).getMessage());
+        
+		
+		VerificationCode verificationCode = new VerificationCode();
+		verificationCode.setCode(emailVerificationService.generateVerificationCode());
+		verificationCodeDao.save(verificationCode);
+		
+        
+        System.out.println(this.emailVerificationService.verifyEmail(jobSeeker).getMessage());
+        jobSeeker.setStatus(false);
+        jobSeeker.setJobStatus(false);
         this.jobSeekerDao.save(jobSeeker);
+        
+		VerificationCodeJobSeeker verificationCodeJobSeeker = new VerificationCodeJobSeeker();
+		verificationCodeJobSeeker.setJobSeeker(jobSeeker);
+		verificationCodeJobSeeker.setVerificationCode(verificationCode);
+		verificationCodeJobSeekerDao.save(verificationCodeJobSeeker);
+		
+		
         return new SuccessResult("The candidate is added successfully.");
     }
 
     public boolean checkId(JobSeeker jobSeeker) {
 
-        JobSeeker findByEmailOrIdentitynumberResult = this.jobSeekerDao.findByIdentityNumber(jobSeeker.getIdentityNumber());
-        if (findByEmailOrIdentitynumberResult == null)
+        JobSeeker findByIdentitynumberResult = this.jobSeekerDao.findByIdentityNumber(jobSeeker.getIdentityNumber());
+        if (findByIdentitynumberResult == null)
             return false;
         return true;
     }
@@ -84,6 +110,7 @@ public class JobSeekerManager implements JobSeekerService {
     @Override
     public DataResult<JobSeeker> getByJobSeekerId(int jobSeekerId) {
         // TODO Auto-generated method stub
-        return new SuccessDataResult<JobSeeker>(this.jobSeekerDao.getByJobSeekerId(jobSeekerId), "Data Listed");
+        return new SuccessDataResult<JobSeeker>(this.jobSeekerDao.getById(jobSeekerId), "Data Listed");
     }
+
 }

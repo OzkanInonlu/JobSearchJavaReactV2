@@ -29,14 +29,9 @@ public class ValidationRuleManager implements ValidationRuleService{
 
 		Year currentYear = Year.now();
 		
-		User user = userDao.findById(jobSeeker.getUser().getUserId()).orElse(null);
-		
-		if(user == null) {
-			return new ErrorResult("No such user found");
-		}
 	
 		if (jobSeeker.getFirstName().isEmpty() || jobSeeker.getLastName().isEmpty() || jobSeeker.getIdentityNumber().isEmpty() 
-        || user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
+        || jobSeeker.getEmail().isEmpty() || jobSeeker.getPassword().isEmpty()) {
 			return new ErrorResult("Please fill the blanks completely.");
 		}
 
@@ -50,17 +45,17 @@ public class ValidationRuleManager implements ValidationRuleService{
 	@Override
 	public Result checkEmployer(Employer employer) {
 
-		if (employer.getCompanyName().isEmpty() || employer.getWebSite().isEmpty() || employer.getUser().getEmail().isEmpty() || employer.getPhoneNumber().isEmpty()
-				|| employer.getUser().getPassword().isEmpty()) {
+		if (employer.getCompanyName().isEmpty() || employer.getWebAddress().isEmpty() || employer.getEmail().isEmpty() || employer.getPhoneNumber().isEmpty()
+				|| employer.getPassword().isEmpty()) {
 			return new ErrorResult("Please fill the blanks completely.");
 		}
 			
 		
 		else {
-			String[] parts = employer.getUser().getEmail().split("@");
+			String[] parts = employer.getEmail().split("@");
 			String domain = parts[1]; 
 			
-			if(!domain.equals(employer.getWebSite())) {
+			if(!domain.equals(employer.getWebAddress())) {
 				return new ErrorResult("Your email must contain the domain in it.");
 			}
 			return new SuccessResult("Validation OK.");

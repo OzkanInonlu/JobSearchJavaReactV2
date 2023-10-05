@@ -37,11 +37,24 @@ public class EmployerManager implements EmployerService {
 	@Override
 	public Result deleteById(int id) {
 		// TODO Auto-generated method stub
-		Employer employer = employerDao.findByEmployerId(id);
+		Employer employer = employerDao.findById(id);
 		if(employer != null) {
-			employerDao.deleteById(id);
+			this.employerDao.deleteById(id);
 			return new SuccessResult("Employer is removed");
 		}
 		return new ErrorResult("Employer not found");
+	}
+
+	@Override
+	public DataResult<Employer> findByEmployerId(int id) {
+		// TODO Auto-generated method stub
+		return new SuccessDataResult<Employer>(this.employerDao.findById(id), "Data Listed");
+	}
+
+	@Override
+	public Result delete(Employer employer) {
+		// TODO Auto-generated method stub
+		this.employerDao.delete(employer);
+		return new SuccessResult("Employer is removed");
 	}
 }

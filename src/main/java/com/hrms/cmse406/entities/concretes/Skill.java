@@ -15,14 +15,14 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "abilities")
+@Table(name = "skills")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class Ability {
+public class Skill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ability_id")
-    private int abilityId;
+    @Column(name = "skill_id")
+    private int skillId;
 
 
     @NotNull
@@ -33,6 +33,6 @@ public class Ability {
    @JsonIgnore
 //    @ManyToMany()
 //    @JoinColumn(name = "cv_id")
-    @ManyToMany(mappedBy = "abilities")
+    @ManyToMany(mappedBy = "skills")
     private List<Cv> cvs;
 }

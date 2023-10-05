@@ -14,13 +14,16 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
 @Table(name = "system_staffs")
-public class SystemStaff {
+public class SystemStaff extends User{
 
+	/*
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "system_staff_id")
     private int systemStaffId;
+    */
 
     @NotNull
     @NotBlank
@@ -32,8 +35,10 @@ public class SystemStaff {
     @Column(name = "last_name")
     private String lastName;
 
+    /*
     @JsonIgnoreProperties({"password","status"})
     @OneToOne()
     @JoinColumn(name ="users_user_id", referencedColumnName = "user_id")
     private User user;
+    */
 }

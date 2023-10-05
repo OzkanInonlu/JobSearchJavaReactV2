@@ -23,13 +23,16 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
 @Table(name = "job_seekers")
-public class JobSeeker {
+public class JobSeeker extends User{
 
+	/*
     @Id
     @GeneratedValue
     @Column(name = "job_seeker_id")
     private int jobSeekerId;
+    */
 
     @NotNull
     @NotBlank
@@ -64,10 +67,12 @@ public class JobSeeker {
     @JoinColumn(name = "job_position_id")
     private JobPosition jobPosition;
 
+    /*
     //@JsonIgnoreProperties({ "password", "status" })
     @OneToOne()
     @JoinColumn(name = "users_user_id", referencedColumnName = "user_id")
     private User user;
+    */
 
     @JsonIgnore
     @OneToMany(mappedBy = "jobSeeker")
